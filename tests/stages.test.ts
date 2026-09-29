@@ -18,6 +18,14 @@ const noop = () => {};
 // Visible text of server-rendered HTML, without tags or React text separators.
 const textOf = (html: string) => html.replace(/<!-- -->/g, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
 
+// 04 §11 language to avoid, as claims: a sentence that mentions an order,
+// reservation, availability, stock or payment must also deny it ("no",
+// "nothing", "not"), so negative disclosures pass and affirmative ones fail.
+const CLAIM = /\b(order(ed| placed| was placed)?|reserved?|available|in stock|payment|paid|booked)\b/i;
+const NEGATION = /\b(no|not|nothing|never)\b/i;
+const affirmativeClaims = (text: string) =>
+  text.split(/(?<=[.!?])\s+/).filter((sentence) => CLAIM.test(sentence) && !NEGATION.test(sentence));
+
 // Mechanical desk + cane-back chair + all three extras (two illustrative items).
 const built = run(
   createInitialState(initialConfiguration),
@@ -113,7 +121,7 @@ describe("ConfirmationPanel", () => {
   it("uses the approved confirmation wording and disclosure", () => {
     expect(html).toMatch(/<h2 id="confirmed-heading"[^>]*>Request simulated\. <span[^>]*>Nice setup\.<\/span><\/h2>/);
     expect(html).toContain("Simulated request · demo only");
-    expect(html).toContain("This is a demo: no rental was created, and nothing was booked or sent to Monis.");
+    expect(textOf(html)).toContain("This is a demo: no rental was created, and nothing was ordered, reserved or sent to Monis.");
     expect(textOf(html)).toContain("No order was placed with Monis and no payment was taken.");
     expect(textOf(html)).toContain("Monis availability, pricing and rental terms are not confirmed.");
   });
@@ -131,7 +139,14 @@ describe("ConfirmationPanel", () => {
   });
 
   it("never claims an order, payment or availability (04 §11)", () => {
-    expect(html).not.toMatch(/order placed|payment complete|reserved|in stock|is available|now available/i);
+    expect(affirmativeClaims(textOf(html))).toEqual([]);
+  });
+
+  it("tells affirmative claims apart from the negative disclosure", () => {
+    expect(affirmativeClaims("Nothing was ordered, reserved or sent to Monis. No payment was taken.")).toEqual([]);
+    for (const claim of ["Order placed.", "Your equipment is reserved.", "All items are available.", "Payment complete.", "Your setup is booked."]) {
+      expect(affirmativeClaims(claim)).toEqual([claim]);
+    }
   });
 
   it("offers Keep editing this workspace as the primary action, then Start over", () => {

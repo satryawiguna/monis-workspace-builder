@@ -44,8 +44,8 @@ export function ConfirmationPanel({ summary, headingRef, onKeepEditing, onStartO
             Request simulated. <span className="block md:inline">Nice setup.</span>
           </h2>
           <p className="text-copy text-body">
-            This is a demo: no rental was created, and nothing was booked or sent to Monis. No order was placed with
-            Monis and no payment was taken. Monis availability, pricing and rental terms are not confirmed.
+            This is a demo: no rental was created, and nothing was ordered, reserved or sent to Monis. No order was
+            placed with Monis and no payment was taken. Monis availability, pricing and rental terms are not confirmed.
           </p>
         </div>
         <div className="flex flex-col gap-1">
