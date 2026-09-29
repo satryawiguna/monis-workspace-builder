@@ -35,7 +35,7 @@ npm run dev     # start the dev server at http://localhost:3000
 | `npm start` | Serve the production build |
 
 ## Live demo
-Not deployed yet.
+https://monis-workspace-builder-alpha.vercel.app
 
 ## Project structure
 - `app/`: the page, layout and global styles (design tokens)
