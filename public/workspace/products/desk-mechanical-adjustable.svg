@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <!-- Sit-stand desk with manual height adjustment: oak top, hand crank on the left leg -->
+  <ellipse cx="600" cy="669" rx="290" ry="7" fill="#2B2118" opacity="0.14"/>
+  <rect x="372" y="656" width="104" height="12" rx="6" fill="#2A2C2A"/>
+  <rect x="724" y="656" width="104" height="12" rx="6" fill="#2A2C2A"/>
+  <rect x="410" y="520" width="28" height="138" fill="#2F3230"/>
+  <rect x="762" y="520" width="28" height="138" fill="#2F3230"/>
+  <rect x="413" y="400" width="22" height="122" fill="#3D413E"/>
+  <rect x="765" y="400" width="22" height="122" fill="#3D413E"/>
+  <rect x="350" y="392" width="500" height="10" fill="#2F3230"/>
+  <rect x="320" y="376" width="560" height="16" rx="3" fill="#CFB48C"/>
+  <rect x="320" y="376" width="560" height="3" rx="1.5" fill="#DEC6A2"/>
+  <rect x="320" y="388" width="560" height="4" fill="#B49670"/>
+  <!-- Crank: gearbox on the leg, folding arm and teak grip -->
+  <rect x="404" y="404" width="12" height="16" rx="2" fill="#2F3230"/>
+  <path d="M404 412 L380 412 L380 440" fill="none" stroke="#2F3230" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="374" y="436" width="12" height="20" rx="5" fill="#8E5F3B"/>
+</svg>
