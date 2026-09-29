@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <!-- Ergonomic mesh office chair with headrest and armrests, pulled out to the right -->
+  <ellipse cx="860" cy="763" rx="112" ry="8" fill="#2B2118" opacity="0.18"/>
+  <path d="M860 728 L768 744 M860 728 L812 749 M860 728 L908 749 M860 728 L952 744" stroke="#2A2C2B" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="768" cy="752" r="8" fill="#1E201F"/><circle cx="812" cy="752" r="8" fill="#1E201F"/><circle cx="908" cy="752" r="8" fill="#1E201F"/><circle cx="952" cy="752" r="8" fill="#1E201F"/>
+  <rect x="848" y="718" width="24" height="16" rx="4" fill="#2A2C2B"/>
+  <rect x="853" y="638" width="14" height="84" fill="#5A5D5B"/>
+  <rect x="772" y="608" width="176" height="34" rx="12" fill="#262928"/>
+  <rect x="780" y="560" width="10" height="56" fill="#2F3230"/>
+  <rect x="930" y="560" width="10" height="56" fill="#2F3230"/>
+  <rect x="766" y="552" width="38" height="10" rx="5" fill="#2F3230"/>
+  <rect x="916" y="552" width="38" height="10" rx="5" fill="#2F3230"/>
+  <rect x="853" y="578" width="14" height="38" fill="#2F3230"/>
+  <rect x="854" y="326" width="12" height="18" fill="#2A2E2C"/>
+  <rect x="816" y="294" width="88" height="36" rx="14" fill="#2A2E2C"/>
+  <rect x="790" y="340" width="140" height="244" rx="34" fill="#2A2E2C"/>
+  <rect x="800" y="350" width="120" height="224" rx="28" fill="#3A403D"/>
+  <path d="M812 358 V566 M824 354 V570 M836 352 V572 M848 352 V572 M860 352 V572 M872 352 V572 M884 352 V572 M896 354 V570 M908 358 V566 M804 366 H916 M802 378 H918 M802 390 H918 M802 402 H918 M802 414 H918 M802 426 H918 M802 438 H918 M802 450 H918 M802 462 H918 M802 474 H918 M802 486 H918 M802 498 H918 M802 522 H918 M802 534 H918 M802 546 H918 M804 558 H916" stroke="#262B28" stroke-width="1.5" opacity="0.6"/>
+  <rect x="800" y="504" width="120" height="14" rx="7" fill="#232725"/>
+</svg>

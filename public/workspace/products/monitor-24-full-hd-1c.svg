@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <!-- Full HD office monitor on its stand, sitting on the desk top (y 376) -->
+  <rect x="615" y="370" width="80" height="6" rx="3" fill="#2A2C2B"/>
+  <rect x="647" y="336" width="16" height="36" fill="#363937"/>
+  <rect x="544" y="196" width="222" height="142" rx="6" fill="#1B1D1C"/>
+  <rect x="550" y="202" width="210" height="128" rx="2" fill="#232A2E"/>
+  <rect x="550" y="202" width="36" height="128" fill="#1D2326"/>
+  <g opacity="0.85">
+    <rect x="556" y="212" width="22" height="3" rx="1.5" fill="#6F7C80"/><rect x="556" y="222" width="18" height="3" rx="1.5" fill="#6F7C80"/><rect x="556" y="232" width="24" height="3" rx="1.5" fill="#8FB59A"/><rect x="556" y="242" width="16" height="3" rx="1.5" fill="#6F7C80"/>
+    <rect x="594" y="212" width="56" height="4" rx="2" fill="#A9BED1"/>
+    <rect x="594" y="223" width="98" height="4" rx="2" fill="#E6DFD2"/>
+    <rect x="606" y="234" width="72" height="4" rx="2" fill="#8FB59A"/>
+    <rect x="606" y="245" width="110" height="4" rx="2" fill="#E6DFD2"/>
+    <rect x="618" y="256" width="64" height="4" rx="2" fill="#D8A46C"/>
+    <rect x="618" y="267" width="90" height="4" rx="2" fill="#E6DFD2"/>
+    <rect x="606" y="278" width="40" height="4" rx="2" fill="#A9BED1"/>
+    <rect x="594" y="289" width="30" height="4" rx="2" fill="#E6DFD2"/>
+    <rect x="594" y="300" width="84" height="4" rx="2" fill="#8FB59A"/>
+    <rect x="606" y="311" width="120" height="4" rx="2" fill="#E6DFD2"/>
+  </g>
+</svg>

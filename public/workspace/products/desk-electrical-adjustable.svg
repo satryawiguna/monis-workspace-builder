@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <!-- Sit-stand desk with electric height adjustment: teak top, control keypad under the front edge -->
+  <ellipse cx="600" cy="669" rx="290" ry="7" fill="#2B2118" opacity="0.14"/>
+  <rect x="372" y="656" width="104" height="12" rx="6" fill="#2A2C2A"/>
+  <rect x="724" y="656" width="104" height="12" rx="6" fill="#2A2C2A"/>
+  <rect x="408" y="516" width="32" height="142" rx="2" fill="#2F3230"/>
+  <rect x="760" y="516" width="32" height="142" rx="2" fill="#2F3230"/>
+  <rect x="412" y="400" width="24" height="118" fill="#3D413E"/>
+  <rect x="764" y="400" width="24" height="118" fill="#3D413E"/>
+  <rect x="405" y="400" width="38" height="14" rx="3" fill="#2A2C2A"/>
+  <rect x="757" y="400" width="38" height="14" rx="3" fill="#2A2C2A"/>
+  <rect x="350" y="392" width="500" height="10" fill="#2F3230"/>
+  <rect x="320" y="376" width="560" height="16" rx="2" fill="#8E5F3B"/>
+  <rect x="320" y="376" width="560" height="4" rx="2" fill="#A87752"/>
+  <rect x="320" y="388" width="560" height="4" fill="#7A4F31"/>
+  <!-- Control keypad -->
+  <rect x="468" y="392" width="56" height="13" rx="3" fill="#2A2C2A"/>
+  <rect x="475" y="396" width="10" height="5" rx="2" fill="#8D918E"/>
+  <rect x="489" y="396" width="10" height="5" rx="2" fill="#8D918E"/>
+  <circle cx="513" cy="398.5" r="2.5" fill="#8FB59A"/>
+</svg>

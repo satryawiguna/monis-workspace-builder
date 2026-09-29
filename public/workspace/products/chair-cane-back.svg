@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <!-- Illustrative woven cane-back chair in natural tones, pulled out to the right -->
+  <ellipse cx="860" cy="763" rx="96" ry="7" fill="#2B2118" opacity="0.16"/>
+  <path d="M812 612 L806 752 M908 612 L914 752" stroke="#845634" stroke-width="9" stroke-linecap="round"/>
+  <rect x="800" y="688" width="120" height="6" fill="#6E4629"/>
+  <path d="M794 600 L784 760 M926 600 L936 760" stroke="#6E4629" stroke-width="10" stroke-linecap="round"/>
+  <rect x="780" y="594" width="160" height="22" rx="6" fill="#8C5E3C"/>
+  <rect x="780" y="594" width="160" height="5" rx="2.5" fill="#A06E48"/>
+  <rect x="806" y="416" width="108" height="152" rx="22" fill="#D8BF92"/>
+  <path d="M818 426 V558 M826 424 V560 M834 422 V562 M842 422 V562 M850 422 V562 M858 422 V562 M866 422 V562 M874 422 V562 M882 422 V562 M890 422 V562 M898 424 V560" stroke="#B0925F" stroke-width="2" stroke-dasharray="4 4"/>
+  <path d="M814 430 H906 M812 438 H908 M812 446 H908 M812 454 H908 M812 462 H908 M812 470 H908 M812 478 H908 M812 486 H908 M812 494 H908 M812 502 H908 M812 510 H908 M812 518 H908 M812 526 H908 M812 534 H908 M812 542 H908 M814 550 H906" stroke="#B0925F" stroke-width="2" stroke-dasharray="4 4" stroke-dashoffset="4"/>
+  <path d="M796 596 L796 440 Q796 404 832 404 L888 404 Q924 404 924 440 L924 596" fill="none" stroke="#7A4F31" stroke-width="12" stroke-linejoin="round"/>
+  <rect x="800" y="566" width="120" height="8" fill="#7A4F31"/>
+</svg>
