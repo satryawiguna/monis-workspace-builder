@@ -1,10 +1,11 @@
 import type { Category, Configuration, Product } from "./types";
 
-// Catalog validation: 05 - Data & API §12 plus the approved MVP catalog from
-// 05 §10–11. Pure and deterministic; an empty list means valid. The page runs
-// it during prerender, so an invalid catalog fails the build (03 §11). It
-// checks data conventions only: whether the asset files exist is tested
-// separately (07 §3).
+// Catalog validation: the 05 - Data & API §12 contract. It checks the rules
+// every catalog must follow, not today's product list, so adding a product
+// stays a data-only change (05 §9). Pure and deterministic; an empty list
+// means valid. The page runs it during prerender, so an invalid catalog fails
+// the build (03 §11). It checks data conventions only: whether the asset
+// files exist is tested separately (07 §3).
 
 export interface CatalogInput {
   products: readonly Product[];
@@ -16,19 +17,8 @@ const CATEGORIES: readonly string[] = ["desk", "chair", "monitor", "lamp", "plan
 const ACCESSORY_CATEGORIES: readonly string[] = ["monitor", "lamp", "plant"];
 const STATUSES: readonly string[] = ["verified", "illustrative"];
 
-// The approved catalog (05 §10). Adding a product means updating this list too.
-const APPROVED_PRODUCTS: Readonly<Record<string, Category>> = {
-  "desk-mechanical-adjustable": "desk",
-  "desk-electrical-adjustable": "desk",
-  "chair-ergonomic-office": "chair",
-  "chair-cane-back": "chair",
-  "monitor-24-full-hd-1c": "monitor",
-  "lamp-smart-led-1s": "lamp",
-  "plant-floor": "plant",
-};
-const APPROVED_VERIFIED_COUNT = 5;
-const APPROVED_ILLUSTRATIVE_COUNT = 2;
-
+// The approved starting configuration (05 §11), which is also the Start Over
+// target (03 §26.2).
 const APPROVED_INITIAL: Configuration = {
   deskId: "desk-electrical-adjustable",
   chairId: "chair-ergonomic-office",
@@ -117,35 +107,6 @@ function validateLayers(products: readonly Product[], errors: string[]): void {
   }
 }
 
-function validateApprovedCatalog(products: readonly Product[], errors: string[]): void {
-  const approvedIds = Object.keys(APPROVED_PRODUCTS);
-  const ids = products.map((p) => p.id);
-
-  if (products.length !== approvedIds.length) {
-    errors.push(`The catalog must have exactly ${approvedIds.length} products; found ${products.length}.`);
-  }
-  for (const id of approvedIds) {
-    const product = products.find((p) => p.id === id);
-    if (!product) {
-      errors.push(`Missing approved product "${id}".`);
-    } else if (product.category !== APPROVED_PRODUCTS[id]) {
-      errors.push(`${id}: category must be "${APPROVED_PRODUCTS[id]}".`);
-    }
-  }
-  for (const id of ids) {
-    if (isNonEmpty(id) && !(id in APPROVED_PRODUCTS)) errors.push(`Unexpected product "${id}".`);
-  }
-
-  const verified = products.filter((p) => p.status === "verified").length;
-  const illustrative = products.filter((p) => p.status === "illustrative").length;
-  if (verified !== APPROVED_VERIFIED_COUNT) {
-    errors.push(`Expected ${APPROVED_VERIFIED_COUNT} verified products; found ${verified}.`);
-  }
-  if (illustrative !== APPROVED_ILLUSTRATIVE_COUNT) {
-    errors.push(`Expected ${APPROVED_ILLUSTRATIVE_COUNT} illustrative products; found ${illustrative}.`);
-  }
-}
-
 function validateInitialConfiguration(
   products: readonly Product[],
   initial: Configuration,
@@ -199,7 +160,6 @@ export function validateCatalog({
   }
 
   validateLayers(products, errors);
-  validateApprovedCatalog(products, errors);
   validateInitialConfiguration(products, initialConfiguration, errors);
 
   if (backdropSrc !== BACKDROP_SRC) {
