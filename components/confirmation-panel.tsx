@@ -40,7 +40,7 @@ export function ConfirmationPanel({ summary, headingRef, onBackToSetup }: Confir
         </div>
         <SimulationNotice />
       </section>
-      {/* Start over joins this bar in T12. */}
+      {/* Start over, the other exit FR-007 requires, is the header link. */}
       <div className="sticky bottom-0 flex shrink-0 flex-col gap-3 border-t border-hairline bg-paper px-4 pt-4 pb-6 md:px-8 lg:static lg:px-7">
         <button
           type="button"

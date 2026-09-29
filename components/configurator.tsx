@@ -4,6 +4,7 @@ import { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { createInitialState, createReducer, type Tab } from "@/lib/configurator";
 import {
   includesIllustrative,
+  isStartOverVisible,
   previewAltText,
   selectLayers,
   selectSummary,
@@ -13,6 +14,7 @@ import type { Category, Configuration, Product, ProductId } from "@/lib/types";
 import { AppHeader } from "./app-header";
 import { BuildPanel } from "./build-panel";
 import { ConfirmationPanel } from "./confirmation-panel";
+import { ResetUndoBanner } from "./reset-undo-banner";
 import { ReviewPanel } from "./review-panel";
 import { SetupSummaryBar } from "./setup-summary-bar";
 import { SimulationNotice } from "./simulation-notice";
@@ -52,14 +54,27 @@ export function Configurator({ catalog, initialConfiguration, backdropSrc }: Con
   };
   const selectTab = (tab: Tab) => dispatch({ type: "setActiveTab", tab });
 
+  // After a stage change, Start over or Undo, focus moves to the heading of the
+  // stage now shown (AD-008, 03 §26.4). Never on first load.
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const focusPending = useRef(false);
+  useEffect(() => {
+    if (focusPending.current) {
+      focusPending.current = false;
+      headingRef.current?.focus();
+    }
+  });
+
   // Stage changes: the same configuration throughout (SR-6); nothing is sent
   // anywhere (AD-006).
   const review = () => {
     dispatch({ type: "review" });
+    focusPending.current = true;
     setAnnouncement("Review your workspace.");
   };
   const edit = () => {
     dispatch({ type: "edit" });
+    focusPending.current = true;
     setAnnouncement("Back to building your workspace. Your setup is unchanged.");
   };
   const changeCategory = (category: Category) => {
@@ -68,32 +83,40 @@ export function Configurator({ catalog, initialConfiguration, backdropSrc }: Con
   };
   const submit = () => {
     dispatch({ type: "submit" });
+    focusPending.current = true;
     setAnnouncement("Request simulated. No order was placed and no payment was taken.");
   };
 
-  // On every stage change, focus moves to the new stage's heading (AD-008,
-  // 04 §15). Not on first load.
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const previousStage = useRef(stage);
-  useEffect(() => {
-    if (previousStage.current !== stage) {
-      previousStage.current = stage;
-      headingRef.current?.focus();
-    }
-  }, [stage]);
+  // Start over and single-level Undo: reducer actions only (03 §26), in
+  // memory, with no browser history, URL or storage.
+  const startOver = () => {
+    dispatch({ type: "startOver" });
+    focusPending.current = true;
+    setAnnouncement("Setup reset. Your previous setup can be restored with Undo.");
+  };
+  const undo = () => {
+    dispatch({ type: "undo" });
+    focusPending.current = true;
+    setAnnouncement("Previous setup restored.");
+  };
 
   return (
     <div className="flex min-h-dvh flex-col lg:h-dvh">
-      <AppHeader stage={stage} />
+      <AppHeader
+        stage={stage}
+        showStartOver={isStartOverVisible(state, initialConfiguration)}
+        onStartOver={startOver}
+      />
       <main className="flex flex-1 flex-col lg:min-h-0 lg:flex-row">
         <div className="flex items-center justify-center md:px-8 md:py-6 lg:min-w-0 lg:flex-1 lg:px-10 lg:py-7">
-          <div className="w-full max-w-[920px]">
+          <div className="relative w-full max-w-[920px]">
             <WorkspacePreview
               layers={selectLayers(configuration, catalog)}
               backdropSrc={backdropSrc}
               label={previewAltText(configuration, catalog)}
               illustrative={includesIllustrative(configuration, catalog)}
             />
+            {state.undo !== null && <ResetUndoBanner onUndo={undo} />}
           </div>
         </div>
 

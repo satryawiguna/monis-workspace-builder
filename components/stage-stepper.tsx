@@ -26,13 +26,13 @@ export function StageStepper({ stage }: { stage: Stage }) {
       <p className="sr-only">
         Step {currentIndex + 1} of {STEPS.length}, {STEPS[currentIndex].label}
       </p>
-      <ol aria-hidden="true" className="flex items-center gap-2.5">
+      <ol aria-hidden="true" className="flex items-center gap-1.5 md:gap-2.5">
         {STEPS.map((step, index) => {
           const state = states[index];
           return (
-            <li key={step.stage} className="flex items-center gap-2.5">
+            <li key={step.stage} className="flex items-center gap-1.5 md:gap-2.5">
               {index > 0 && (
-                <span className={`h-0.5 w-5 lg:w-7 ${state === "upcoming" ? "bg-connector" : "bg-ink"}`} />
+                <span className={`hidden h-0.5 w-5 md:block lg:w-7 ${state === "upcoming" ? "bg-connector" : "bg-ink"}`} />
               )}
               <span className={`flex items-center gap-2 ${state === "upcoming" ? "text-stone-muted" : "text-ink"}`}>
                 <span
