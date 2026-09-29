@@ -111,10 +111,18 @@ describe("ConfirmationPanel", () => {
   );
 
   it("uses the approved confirmation wording and disclosure", () => {
-    expect(html).toContain("Request simulated. Nice setup.");
+    expect(html).toMatch(/<h2 id="confirmed-heading"[^>]*>Request simulated\. <span[^>]*>Nice setup\.<\/span><\/h2>/);
     expect(html).toContain("Simulated request · demo only");
-    expect(html).toContain("No order was placed with Monis and no payment was taken.");
-    expect(html).toContain("Monis availability, pricing and rental terms are not confirmed.");
+    expect(html).toContain("This is a demo: no rental was created, and nothing was booked or sent to Monis.");
+    expect(textOf(html)).toContain("No order was placed with Monis and no payment was taken.");
+    expect(textOf(html)).toContain("Monis availability, pricing and rental terms are not confirmed.");
+  });
+
+  it("leads the phone layout with a decorative success mark and the Step 3 caption", () => {
+    expect(html).toMatch(/<svg[^>]*aria-hidden="true"/);
+    expect(html).toContain(">Step 3 of 3 · Simulation<");
+    // The mark and caption come before the heading, which carries the state in words.
+    expect(html.indexOf("Step 3 of 3 · Simulation")).toBeLessThan(html.indexOf('id="confirmed-heading"'));
   });
 
   it("restates the submitted setup with statuses", () => {

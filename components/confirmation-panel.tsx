@@ -7,6 +7,8 @@ import { SimulationNotice } from "./simulation-notice";
 // simulated. Nothing was sent, ordered, reserved or paid, and the setup is
 // restated from the same configuration.
 
+export const SIMULATED_TAG = "Simulated request · demo only";
+
 interface ConfirmationPanelProps {
   summary: SummaryView;
   headingRef: Ref<HTMLHeadingElement>;
@@ -19,18 +21,31 @@ export function ConfirmationPanel({ summary, headingRef, onKeepEditing, onStartO
     <>
       <section
         aria-labelledby="confirmed-heading"
-        className="flex flex-col gap-5 px-4 py-6 md:px-8 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:px-7"
+        className="flex flex-1 flex-col gap-5 px-4 pt-7 pb-6 md:px-8 md:py-6 lg:min-h-0 lg:overflow-y-auto lg:px-7"
       >
-        <span className="w-fit rounded-thumb border-[1.5px] border-leaf px-3 py-1.5 text-xs font-bold tracking-[0.03em] text-leaf-ink uppercase">
-          Simulated request · demo only
+        {/* Phone (DESIGN.md §3): success mark and step caption lead, and the
+            Simulated request tag sits on the preview instead (configurator). */}
+        <div className="flex items-center gap-3 md:hidden">
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-leaf text-paper">
+            <SuccessIcon />
+          </span>
+          <p className="text-xs font-bold tracking-eyebrow text-stone uppercase">Step 3 of 3 · Simulation</p>
+        </div>
+        <span className="hidden w-fit rounded-thumb border-[1.5px] border-leaf px-3 py-1.5 text-xs font-bold tracking-[0.03em] text-leaf-ink uppercase md:block">
+          {SIMULATED_TAG}
         </span>
         <div className="flex flex-col gap-2">
-          <h2 id="confirmed-heading" ref={headingRef} tabIndex={-1} className="font-serif text-section outline-none">
-            Request simulated. Nice setup.
+          <h2
+            id="confirmed-heading"
+            ref={headingRef}
+            tabIndex={-1}
+            className="font-serif text-heading outline-none md:text-section"
+          >
+            Request simulated. <span className="block md:inline">Nice setup.</span>
           </h2>
           <p className="text-copy text-body">
-            No order was placed with Monis and no payment was taken. Monis availability, pricing and rental
-            terms are not confirmed.
+            This is a demo: no rental was created, and nothing was booked or sent to Monis. No order was placed with
+            Monis and no payment was taken. Monis availability, pricing and rental terms are not confirmed.
           </p>
         </div>
         <div className="flex flex-col gap-1">
@@ -60,5 +75,13 @@ export function ConfirmationPanel({ summary, headingRef, onKeepEditing, onStartO
         </button>
       </div>
     </>
+  );
+}
+
+function SuccessIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M5 12.5 L10 17 L19 7" />
+    </svg>
   );
 }

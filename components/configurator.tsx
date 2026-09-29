@@ -13,7 +13,7 @@ import {
 import type { Category, Configuration, Product, ProductId } from "@/lib/types";
 import { AppHeader } from "./app-header";
 import { BuildPanel } from "./build-panel";
-import { ConfirmationPanel } from "./confirmation-panel";
+import { ConfirmationPanel, SIMULATED_TAG } from "./confirmation-panel";
 import { ResetUndoBanner } from "./reset-undo-banner";
 import { ReviewPanel } from "./review-panel";
 import { SetupSummaryBar } from "./setup-summary-bar";
@@ -117,10 +117,17 @@ export function Configurator({ catalog, initialConfiguration, backdropSrc }: Con
               illustrative={includesIllustrative(configuration, catalog)}
             />
             {state.undo !== null && <ResetUndoBanner onUndo={undo} />}
+            {/* Phone only: the Confirmed tag over the preview (DESIGN.md §3);
+                tablet and desktop show it in the confirmation panel. */}
+            {stage === "confirmed" && (
+              <span className="absolute right-2.5 bottom-2.5 rounded-thumb border-[1.5px] border-leaf bg-paper/95 px-2.5 py-1.5 text-xs font-bold tracking-[0.03em] text-leaf-ink uppercase md:hidden">
+                {SIMULATED_TAG}
+              </span>
+            )}
           </div>
         </div>
 
-        <div className="flex flex-col bg-paper lg:min-h-0 lg:w-[440px] lg:shrink-0 lg:border-l lg:border-rule">
+        <div className={`flex flex-col bg-paper lg:min-h-0 ${stage === "confirmed" ? "max-lg:flex-1" : ""} lg:w-[440px] lg:shrink-0 lg:border-l lg:border-rule`}>
           {stage === "configuring" && (
             <>
               <section
