@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <!-- Slim LED desk lamp with a warm light cone, sitting on the desk top (y 376) -->
+  <polygon points="474,244 488,250 568,376 432,376" fill="#F7D98F" opacity="0.2"/>
+  <rect x="410" y="367" width="36" height="9" rx="3" fill="#2A2B29"/>
+  <path d="M428 369 L416 282 L466 236" fill="none" stroke="#2A2B29" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="416" cy="282" r="5" fill="#2A2B29"/>
+  <path d="M452 224 L490 240 L482 256 L444 238 Z" fill="#2A2B29"/>
+  <ellipse cx="484" cy="250" rx="8" ry="4" transform="rotate(24 484 250)" fill="#FBE3A6"/>
+</svg>

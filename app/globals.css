@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Visual system: DESIGN.md v1 "Limewash & Teak". Consume these through
+   Tailwind utilities (bg-limewash, text-ink, rounded-row, …); never hard-code
+   hex values in components. Spacing uses Tailwind's default 4px scale
+   (1, 2, 3, 4, 6, 8, 10 = 4–40px), and 16px / pill radii map to
+   rounded-2xl / rounded-full, so neither needs extra tokens. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-hanken-grotesk), "Helvetica Neue", sans-serif;
+  --font-serif: var(--font-young-serif), Georgia, serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  /* UI colour (DESIGN.md §2) */
+  --color-limewash: #f3eee5;
+  --color-paper: #fbf8f2;
+  --color-card: #fffdf9;
+  --color-sand: #ece4d6;
+  --color-ink: #1c211d;
+  --color-body: #3f443e;
+  --color-stone: #5b6058;
+  --color-stone-muted: #62665e;
+  --color-leaf: #2f5d46;
+  --color-leaf-ink: #22463a;
+  --color-leaf-tint: #eef3ec;
+  --color-clay: #b4532a; /* focus ring only */
+  --color-hairline: #e4dccd;
+  --color-rule: #ddd4c5;
+  --color-tab-edge: #d9cfbe;
+  --color-radio-edge: #a39a8a;
+  --color-connector: #c9bfae;
+  --color-chip-edge: #857a69;
+  --color-track-off: #b9b0a0;
+  --color-thumb: #efe7da;
+  --color-notice: #efe8dc;
+  --color-notice-edge: #a99e8b;
+
+  /* Scene palette: artwork only. Wall is exposed because it is also the
+     preview frame background (DESIGN.md §2); the other scene colours live
+     only inside the SVG files. */
+  --color-scene-wall: #e9decd;
+
+  /* Typography scale (DESIGN.md §2); 12px captions use text-xs,
+     16px body uses text-base. Body copy is text-copy, because text-body is
+     already the body colour. */
+  --text-title: 34px;
+  --text-title--line-height: 1.1;
+  --text-title--letter-spacing: -0.015em;
+  --text-heading: 30px;
+  --text-heading--line-height: 1.1;
+  --text-section: 22px;
+  --text-section--letter-spacing: -0.01em;
+  --text-label: 15px;
+  --text-copy: 14.5px;
+  --text-copy--line-height: 1.5;
+  --text-chip: 11px;
+  --tracking-eyebrow: 0.08em;
+
+  /* Radius values Tailwind's scale can't express (DESIGN.md §2) */
+  --radius-thumb: 10px;
+  --radius-row: 14px;
+  --radius-preview: 20px;
+
+  /* Elevation (DESIGN.md §2–3) */
+  --shadow-preview: 0 30px 60px -36px rgba(70, 45, 20, 0.45),
+    0 0 0 1px rgba(60, 40, 20, 0.08);
+  --shadow-card-hover: 0 10px 22px -14px rgba(60, 40, 20, 0.55);
+  --shadow-tab: 0 1px 2px rgba(40, 30, 20, 0.14), 0 0 0 1px var(--color-tab-edge);
+  --shadow-banner: 0 16px 32px -18px rgba(0, 0, 0, 0.5);
+  --shadow-knob: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-halo: 0 0 0 4px rgba(47, 93, 70, 0.22);
+}
+
+@layer base {
+  html {
+    /* Light theme only: no dark mode is designed (DESIGN.md §9). */
+    color-scheme: light;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    background-color: var(--color-limewash);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  /* DESIGN.md §4: the clay ring on every focusable element, never removed. */
+  :focus-visible {
+    outline: 3px solid var(--color-clay);
+    outline-offset: 3px;
+  }
+
+  /* DESIGN.md §5: with reduced motion, animation and lift are removed and
+     state changes are instant. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }

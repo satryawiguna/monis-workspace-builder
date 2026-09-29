@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <!-- Illustrative leafy floor plant in a woven pot, standing to the right of the desk; shifted 20px left to stay inside the mobile safe zone (DESIGN.md §7) -->
+  <g transform="translate(-20 0)">
+  <ellipse cx="1080" cy="670" rx="72" ry="7" fill="#2B2118" opacity="0.16"/>
+  <path d="M1080 588 C1076 520 1040 460 1012 420 M1080 588 C1082 500 1090 430 1100 364 M1080 588 C1090 530 1130 470 1158 440 M1080 588 C1070 550 1054 520 1044 502 M1080 588 C1096 552 1110 520 1120 494" stroke="#4C6B4F" stroke-width="4" fill="none"/>
+  <ellipse cx="1004" cy="408" rx="46" ry="22" transform="rotate(-35 1004 408)" fill="#3F6247"/>
+  <ellipse cx="1100" cy="342" rx="26" ry="54" transform="rotate(8 1100 342)" fill="#4A7152"/>
+  <ellipse cx="1162" cy="428" rx="46" ry="22" transform="rotate(30 1162 428)" fill="#3F6247"/>
+  <ellipse cx="1042" cy="498" rx="38" ry="18" transform="rotate(-22 1042 498)" fill="#56805C"/>
+  <ellipse cx="1122" cy="490" rx="40" ry="18" transform="rotate(24 1122 490)" fill="#4A7152"/>
+  <path d="M968 432 L1040 384 M1096 296 L1104 388 M1126 406 L1198 450 M1010 510 L1074 486 M1088 478 L1156 502" stroke="#6E9474" stroke-width="2" opacity="0.7"/>
+  <rect x="1024" y="584" width="112" height="10" rx="4" fill="#A77A4A"/>
+  <path d="M1030 594 L1130 594 L1120 668 L1040 668 Z" fill="#B88A58"/>
+  <path d="M1033 610 H1127 M1035 628 H1125 M1037 646 H1123" stroke="#9C7245" stroke-width="3"/>
+  </g>
+</svg>
