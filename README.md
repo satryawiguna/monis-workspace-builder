@@ -4,6 +4,12 @@ A visual workspace configurator for people renting workspace equipment in Bali, 
 
 > **Concept demo.** This is not a Monis Rent booking tool. Submitting creates no rental, order or reservation, sends nothing to Monis, and takes no payment. Monis availability, pricing and rental terms are not shown or confirmed. Items marked "Seen on Monis Bali" match a product page on monis.rent for Bali; that is not a claim they are available now. Items marked "Illustrative" are not verified Monis products.
 
+## Project Links
+
+- **Live Demo:** [Monis Workspace Builder](https://monis-workspace-builder-alpha.vercel.app)
+- **GitHub Repository:** [GitHub](https://github.com/satryawiguna/monis-workspace-builder)
+- **Project Documentation:** [Notion — Engineering Documentation](https://thunder-jumper-a8d.notion.site/Monis-Workspace-Builder-Engineering-Documentation-3eaae27728f9804d937cdb17f73d33cf?source=copy_link)
+
 ## Features
 - **Build:** choose one of two desks and one of two chairs, and add or remove a monitor, a lamp and a plant. Every option shows its content status.
 - **Live preview:** a layered 2D illustration of the workspace that updates with every change.
