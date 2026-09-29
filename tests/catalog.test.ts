@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { backdropSrc, catalog, initialConfiguration } from "../lib/catalog";
 import type { Configuration, Product } from "../lib/types";
@@ -67,9 +68,27 @@ describe("the approved catalog", () => {
     expect(backdropSrc).toBe("/workspace/backdrop.svg");
   });
 
-  // The files are produced in T8 (DL-004); these checks are added with them.
-  it.todo("has every asset file under public/, with viewBox 0 0 1200 800 and no forbidden elements");
-  it.todo("keeps each SVG within 30 KB and all 8 within 150 KB");
+  // Asset files (07 §3, DL-004): the backdrop plus one SVG per product.
+  const assetSrcs = [backdropSrc, ...catalog.map((p) => p.asset.src)];
+  const readAsset = (src: string) => readFileSync(new URL(`../public${src}`, import.meta.url));
+
+  it("has every asset file under public/, with viewBox 0 0 1200 800 and no forbidden elements", () => {
+    expect(assetSrcs).toHaveLength(8);
+    for (const src of assetSrcs) {
+      const svg = readAsset(src).toString("utf8");
+      expect(svg, src).toContain('viewBox="0 0 1200 800"');
+      expect(svg, src).not.toMatch(/<(script|style|image|text|foreignObject|filter|use)\b/i);
+      expect(svg, src).not.toMatch(/href=|url\(|@import/i);
+    }
+  });
+
+  it("keeps each SVG within 30 KB and all 8 within 150 KB", () => {
+    const sizes = assetSrcs.map((src) => readAsset(src).byteLength);
+    for (const [index, size] of sizes.entries()) {
+      expect(size, assetSrcs[index]).toBeLessThanOrEqual(30 * 1024);
+    }
+    expect(sizes.reduce((sum, size) => sum + size, 0)).toBeLessThanOrEqual(150 * 1024);
+  });
 });
 
 describe("catalog validation", () => {
