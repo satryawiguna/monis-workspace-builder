@@ -1,4 +1,6 @@
+import { WorkspacePreview } from "@/components/workspace-preview";
 import { backdropSrc, catalog, initialConfiguration } from "@/lib/catalog";
+import { previewAltText, selectLayers } from "@/lib/selectors";
 import { assertValidCatalog } from "@/lib/validate-catalog";
 
 export default function Home() {
@@ -15,10 +17,15 @@ export default function Home() {
           come together before you request it.
         </p>
       </header>
-      <section
-        aria-label="Workspace configurator"
-        className="flex flex-1 flex-col"
-      />
+      <section aria-label="Workspace configurator" className="flex flex-1 flex-col">
+        {/* Shows the initial configuration until the configurator state is
+            wired in (T7). */}
+        <WorkspacePreview
+          layers={selectLayers(initialConfiguration, catalog)}
+          backdropSrc={backdropSrc}
+          label={previewAltText(initialConfiguration, catalog)}
+        />
+      </section>
     </main>
   );
 }
