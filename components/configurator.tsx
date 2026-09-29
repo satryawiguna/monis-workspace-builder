@@ -1,11 +1,19 @@
 "use client";
 
-import { useMemo, useReducer, useState } from "react";
+import { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { createInitialState, createReducer, type Tab } from "@/lib/configurator";
-import { includesIllustrative, previewAltText, selectLayers, selectSummary } from "@/lib/selectors";
-import type { Configuration, Product, ProductId } from "@/lib/types";
+import {
+  includesIllustrative,
+  previewAltText,
+  selectLayers,
+  selectSummary,
+  tabForCategory,
+} from "@/lib/selectors";
+import type { Category, Configuration, Product, ProductId } from "@/lib/types";
 import { AppHeader } from "./app-header";
 import { BuildPanel } from "./build-panel";
+import { ConfirmationPanel } from "./confirmation-panel";
+import { ReviewPanel } from "./review-panel";
 import { SetupSummaryBar } from "./setup-summary-bar";
 import { SimulationNotice } from "./simulation-notice";
 import { WorkspacePreview } from "./workspace-preview";
@@ -44,9 +52,39 @@ export function Configurator({ catalog, initialConfiguration, backdropSrc }: Con
   };
   const selectTab = (tab: Tab) => dispatch({ type: "setActiveTab", tab });
 
+  // Stage changes: the same configuration throughout (SR-6); nothing is sent
+  // anywhere (AD-006).
+  const review = () => {
+    dispatch({ type: "review" });
+    setAnnouncement("Review your workspace.");
+  };
+  const edit = () => {
+    dispatch({ type: "edit" });
+    setAnnouncement("Back to building your workspace. Your setup is unchanged.");
+  };
+  const changeCategory = (category: Category) => {
+    edit();
+    dispatch({ type: "setActiveTab", tab: tabForCategory(category) });
+  };
+  const submit = () => {
+    dispatch({ type: "submit" });
+    setAnnouncement("Request simulated. No order was placed and no payment was taken.");
+  };
+
+  // On every stage change, focus moves to the new stage's heading (AD-008,
+  // 04 §15). Not on first load.
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const previousStage = useRef(stage);
+  useEffect(() => {
+    if (previousStage.current !== stage) {
+      previousStage.current = stage;
+      headingRef.current?.focus();
+    }
+  }, [stage]);
+
   return (
     <div className="flex min-h-dvh flex-col lg:h-dvh">
-      <AppHeader />
+      <AppHeader stage={stage} />
       <main className="flex flex-1 flex-col lg:min-h-0 lg:flex-row">
         <div className="flex items-center justify-center md:px-8 md:py-6 lg:min-w-0 lg:flex-1 lg:px-10 lg:py-7">
           <div className="w-full max-w-[920px]">
@@ -60,12 +98,15 @@ export function Configurator({ catalog, initialConfiguration, backdropSrc }: Con
         </div>
 
         <div className="flex flex-col bg-paper lg:min-h-0 lg:w-[440px] lg:shrink-0 lg:border-l lg:border-rule">
-          {stage === "configuring" ? (
+          {stage === "configuring" && (
             <>
               <section
-                aria-label="Build your workspace"
+                aria-labelledby="build-heading"
                 className="flex flex-col gap-5 px-4 py-6 md:px-8 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:px-7"
               >
+                <h2 id="build-heading" ref={headingRef} tabIndex={-1} className="sr-only">
+                  Build your workspace
+                </h2>
                 <BuildPanel
                   catalog={catalog}
                   configuration={configuration}
@@ -79,22 +120,21 @@ export function Configurator({ catalog, initialConfiguration, backdropSrc }: Con
                 <SimulationNotice />
               </section>
               <div className="sticky bottom-0 shrink-0 border-t border-hairline bg-paper px-4 pt-4 pb-6 md:px-8 lg:static lg:px-7">
-                <SetupSummaryBar summary={summary} onReview={() => dispatch({ type: "review" })} />
+                <SetupSummaryBar summary={summary} onReview={review} />
               </div>
             </>
-          ) : (
-            // TEMPORARY until T11 adds the Review and Confirmed panels: keeps
-            // the reviewing stage from being a dead end.
-            <section aria-label="Review your workspace" className="flex flex-col gap-4 px-4 py-6 md:px-8 lg:px-7">
-              <h2 className="font-serif text-section">Review your workspace</h2>
-              <button
-                type="button"
-                onClick={() => dispatch({ type: "edit" })}
-                className="h-12 rounded-row border-[1.5px] border-ink text-label font-semibold hover:shadow-[inset_0_0_0_2px_var(--color-ink)]"
-              >
-                Back to editing
-              </button>
-            </section>
+          )}
+          {stage === "reviewing" && (
+            <ReviewPanel
+              summary={summary}
+              headingRef={headingRef}
+              onChange={changeCategory}
+              onRequest={submit}
+              onChangeSetup={edit}
+            />
+          )}
+          {stage === "confirmed" && (
+            <ConfirmationPanel summary={summary} headingRef={headingRef} onBackToSetup={edit} />
           )}
         </div>
       </main>
