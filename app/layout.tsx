@@ -1,5 +1,18 @@
 import type { Metadata } from "next";
+import { Hanken_Grotesk, Young_Serif } from "next/font/google";
 import "./globals.css";
+
+// Variable font: one file covers the 400–700 weights DESIGN.md uses.
+const hankenGrotesk = Hanken_Grotesk({
+  variable: "--font-hanken-grotesk",
+  subsets: ["latin"],
+});
+
+const youngSerif = Young_Serif({
+  variable: "--font-young-serif",
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Monis Rent — Workspace Configurator",
@@ -9,7 +22,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html
+      lang="en"
+      className={`${hankenGrotesk.variable} ${youngSerif.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
