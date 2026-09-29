@@ -16,7 +16,7 @@ interface ProductOptionProps {
 }
 
 const CARD =
-  "relative flex cursor-pointer items-center rounded-2xl border-2 border-hairline bg-card text-ink has-[:checked]:border-leaf has-[:checked]:bg-leaf-tint has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-clay motion-safe:transition-[box-shadow,transform] motion-safe:duration-160 hover:shadow-card-hover motion-safe:hover:-translate-y-px";
+  "relative flex cursor-pointer items-center rounded-2xl border-2 border-hairline bg-card text-ink has-[:checked]:border-leaf has-[:checked]:bg-leaf-tint has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-clay motion-safe:transition-[box-shadow,translate] motion-safe:duration-160 hover:shadow-card-hover motion-safe:hover:-translate-y-px";
 
 function Thumb({ product, width, height }: { product: Product; width: number; height: number }) {
   const frame = thumbnailFrame(product.category, width, height);
@@ -83,8 +83,8 @@ export function ProductOption({ product, type, name, checked, onChange }: Produc
           </span>
           <span className={`relative h-6 w-10 rounded-full ${checked ? "bg-leaf" : "bg-track-off"}`}>
             <span
-              className={`absolute top-[3px] size-[18px] rounded-full bg-card shadow-knob motion-safe:transition-[left] motion-safe:duration-160 ${
-                checked ? "left-[19px]" : "left-[3px]"
+              className={`absolute top-[3px] left-[3px] size-[18px] rounded-full bg-card shadow-knob motion-safe:transition-[translate] motion-safe:duration-160 ${
+                checked ? "translate-x-4" : ""
               }`}
             />
           </span>

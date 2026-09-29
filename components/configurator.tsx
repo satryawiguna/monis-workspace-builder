@@ -36,6 +36,11 @@ export function Configurator({ catalog, initialConfiguration, backdropSrc }: Con
   const [announcement, setAnnouncement] = useState("");
 
   const { configuration, stage } = state;
+
+  // Stage-change motion (DESIGN.md §5) plays only after the stage changes,
+  // never on first load. Adjusted during render, like the preview's layers.
+  const [shownStage, setShownStage] = useState({ stage, changed: false });
+  if (shownStage.stage !== stage) setShownStage({ stage, changed: true });
   const summary = selectSummary(configuration, catalog);
   const nameOf = (id: ProductId) => catalog.find((p) => p.id === id)?.name ?? id;
 
@@ -107,7 +112,8 @@ export function Configurator({ catalog, initialConfiguration, backdropSrc }: Con
         showStartOver={isStartOverVisible(state, initialConfiguration)}
         onStartOver={startOver}
       />
-      <main className="flex flex-1 flex-col lg:min-h-0 lg:flex-row">
+      {/* overflow-x-clip: the stage panel's 14px slide never adds sideways scroll. */}
+      <main className="flex flex-1 flex-col overflow-x-clip lg:min-h-0 lg:flex-row">
         <div className="flex items-center justify-center md:px-8 md:py-6 lg:min-w-0 lg:flex-1 lg:px-10 lg:py-7">
           <div className="relative w-full max-w-[920px]">
             <WorkspacePreview
@@ -127,7 +133,12 @@ export function Configurator({ catalog, initialConfiguration, backdropSrc }: Con
           </div>
         </div>
 
-        <div className={`flex flex-col bg-paper lg:min-h-0 ${stage === "confirmed" ? "max-lg:flex-1" : ""} lg:w-[440px] lg:shrink-0 lg:border-l lg:border-rule`}>
+        <div
+          key={stage}
+          className={`flex flex-col bg-paper lg:min-h-0 ${stage === "confirmed" ? "max-lg:flex-1" : ""} ${
+            shownStage.changed ? "motion-safe:animate-stage-enter" : ""
+          } lg:w-[440px] lg:shrink-0 lg:border-l lg:border-rule`}
+        >
           {stage === "configuring" && (
             <>
               <section
