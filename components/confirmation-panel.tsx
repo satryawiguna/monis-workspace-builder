@@ -10,10 +10,11 @@ import { SimulationNotice } from "./simulation-notice";
 interface ConfirmationPanelProps {
   summary: SummaryView;
   headingRef: Ref<HTMLHeadingElement>;
-  onBackToSetup: () => void;
+  onKeepEditing: () => void;
+  onStartOver: () => void;
 }
 
-export function ConfirmationPanel({ summary, headingRef, onBackToSetup }: ConfirmationPanelProps) {
+export function ConfirmationPanel({ summary, headingRef, onKeepEditing, onStartOver }: ConfirmationPanelProps) {
   return (
     <>
       <section
@@ -40,14 +41,22 @@ export function ConfirmationPanel({ summary, headingRef, onBackToSetup }: Confir
         </div>
         <SimulationNotice />
       </section>
-      {/* Start over, the other exit FR-007 requires, is the header link. */}
+      {/* FR-007: back to the configurator with the setup kept (primary), or
+          a new configuration through the existing Start over (secondary). */}
       <div className="sticky bottom-0 flex shrink-0 flex-col gap-3 border-t border-hairline bg-paper px-4 pt-4 pb-6 md:px-8 lg:static lg:px-7">
         <button
           type="button"
-          onClick={onBackToSetup}
+          onClick={onKeepEditing}
+          className="h-13 w-full rounded-row bg-ink text-label font-semibold text-paper motion-safe:transition-shadow motion-safe:duration-160 hover:shadow-halo"
+        >
+          Keep editing this workspace
+        </button>
+        <button
+          type="button"
+          onClick={onStartOver}
           className="h-12 w-full rounded-row border-[1.5px] border-ink text-label font-semibold hover:shadow-[inset_0_0_0_2px_var(--color-ink)]"
         >
-          Back to setup
+          Start over
         </button>
       </div>
     </>

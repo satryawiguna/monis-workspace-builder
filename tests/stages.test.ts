@@ -105,7 +105,8 @@ describe("ConfirmationPanel", () => {
     createElement(ConfirmationPanel, {
       summary: selectSummary(built.configuration, catalog),
       headingRef: null,
-      onBackToSetup: noop,
+      onKeepEditing: noop,
+      onStartOver: noop,
     }),
   );
 
@@ -125,8 +126,15 @@ describe("ConfirmationPanel", () => {
     expect(html).not.toMatch(/order placed|payment complete|reserved|in stock|is available|now available/i);
   });
 
-  it("offers Back to setup", () => {
-    expect(html).toContain(">Back to setup<");
+  it("offers Keep editing this workspace as the primary action, then Start over", () => {
+    const keep = html.indexOf(">Keep editing this workspace<");
+    const startOver = html.indexOf(">Start over<");
+    expect(keep).toBeGreaterThan(-1);
+    expect(startOver).toBeGreaterThan(keep);
+    // Primary is the filled ink button; Start over is the quieter outlined one.
+    expect(html).toMatch(/class="[^"]*bg-ink[^"]*">Keep editing this workspace</);
+    expect(html).toMatch(/class="[^"]*border-ink[^"]*">Start over</);
+    expect(html).not.toMatch(/class="[^"]*bg-ink[^"]*">Start over</);
   });
 });
 

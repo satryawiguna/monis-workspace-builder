@@ -3,6 +3,8 @@ import { StageStepper } from "./stage-stepper";
 
 // Application header (DESIGN.md §3): brand line, the informational stepper,
 // and Start over as a text link when isStartOverVisible() allows it (DL-003).
+// On Confirmed, Start over is the confirmation panel's secondary action
+// instead, so the header doesn't repeat it.
 interface AppHeaderProps {
   stage: Stage;
   showStartOver: boolean;
@@ -18,7 +20,7 @@ export function AppHeader({ stage, showStartOver, onStartOver }: AppHeaderProps)
       </h1>
       <div className="flex items-center gap-3 md:gap-6">
         <StageStepper stage={stage} />
-        {showStartOver && (
+        {showStartOver && stage !== "confirmed" && (
           <button
             type="button"
             onClick={onStartOver}

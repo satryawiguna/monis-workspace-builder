@@ -157,7 +157,7 @@ export function Configurator({ catalog, initialConfiguration, backdropSrc }: Con
             />
           )}
           {stage === "confirmed" && (
-            <ConfirmationPanel summary={summary} headingRef={headingRef} onBackToSetup={edit} />
+            <ConfirmationPanel summary={summary} headingRef={headingRef} onKeepEditing={edit} onStartOver={startOver} />
           )}
         </div>
       </main>

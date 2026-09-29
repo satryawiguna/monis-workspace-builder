@@ -100,12 +100,54 @@ describe("Start over and Undo journeys", () => {
 });
 
 describe("AppHeader Start over link", () => {
-  const html = (showStartOver: boolean) =>
-    renderToStaticMarkup(createElement(AppHeader, { stage: "configuring", showStartOver, onStartOver: noop }));
+  const html = (showStartOver: boolean, stage: "configuring" | "reviewing" | "confirmed" = "configuring") =>
+    renderToStaticMarkup(createElement(AppHeader, { stage, showStartOver, onStartOver: noop }));
 
   it("renders a Start over button only when visible", () => {
     expect(html(false)).not.toContain("Start over");
     expect(html(true)).toMatch(/<button type="button"[^>]*>Start over<\/button>/);
+    expect(html(true, "reviewing")).toMatch(/>Start over<\/button>/);
+  });
+
+  it("leaves Start over to the confirmation panel on Confirmed", () => {
+    expect(html(true, "confirmed")).not.toContain("Start over");
+  });
+});
+
+describe("the Confirmed actions", () => {
+  const confirmed = run(
+    init,
+    { type: "setActiveTab", tab: "extras" },
+    { type: "selectDesk", id: "desk-mechanical-adjustable" },
+    { type: "selectChair", id: "chair-cane-back" },
+    { type: "toggleAccessory", id: "plant-floor" },
+    { type: "review" },
+    { type: "submit" },
+  );
+
+  it("Keep editing (edit) returns to Build with the same desk, chair and extras, and no reset", () => {
+    const editing = run(confirmed, { type: "edit" });
+    expect(editing.stage).toBe("configuring");
+    expect(editing.configuration).toEqual(confirmed.configuration);
+    expect(editing.undo).toBeNull();
+  });
+
+  it("Start over resets to the initial Build with the Desk tab and an Undo snapshot", () => {
+    const reset = run(confirmed, { type: "startOver" });
+    expect(reset.configuration).toEqual(initialConfiguration);
+    expect(reset.stage).toBe("configuring");
+    expect(reset.ui.activeTab).toBe("desk");
+    expect(reset.undo).toEqual({
+      configuration: confirmed.configuration,
+      stage: "confirmed",
+      activeTab: "extras",
+    });
+  });
+
+  it("Undo after that restores the configuration, Confirmed and the previous tab", () => {
+    const restored = run(confirmed, { type: "startOver" }, { type: "undo" });
+    expect(restored).toEqual({ ...confirmed, undo: null });
+    expect(restored.ui.activeTab).toBe("extras");
   });
 });
 
