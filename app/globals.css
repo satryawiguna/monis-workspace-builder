@@ -91,6 +91,15 @@
     color-scheme: light;
   }
 
+  /* Below lg the stage actions are a sticky bottom bar (up to ~170px tall on
+     a phone). Keep keyboard focus scrolled clear of it (04 §15: focus stays
+     visible). */
+  @media (width < 64rem) {
+    html {
+      scroll-padding-bottom: 11rem;
+    }
+  }
+
   body {
     background-color: var(--color-limewash);
     color: var(--color-ink);

@@ -1,5 +1,10 @@
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
+import { WorkspacePreview } from "../components/workspace-preview";
+import { backdropSrc, catalog, initialConfiguration } from "../lib/catalog";
 import { offsetTransform, trackEnteredLayers, type EnteredLayers } from "../lib/preview";
+import { selectLayers } from "../lib/selectors";
 
 // Workspace preview helpers (T9): asset offsets and which layers animate.
 
@@ -43,5 +48,19 @@ describe("trackEnteredLayers", () => {
     const noChair = trackEnteredLayers(start, ["desk-a"]);
     const chairBack = trackEnteredLayers(noChair, ["desk-a", "chair-a"]);
     expect([...chairBack.entered]).toEqual(["chair-a"]);
+  });
+});
+
+describe("WorkspacePreview stacking", () => {
+  it("isolates the layers' z-index in the frame, so overlays stay above the artwork (T13)", () => {
+    const html = renderToStaticMarkup(
+      createElement(WorkspacePreview, {
+        layers: selectLayers(initialConfiguration, catalog),
+        backdropSrc,
+        label: "Workspace",
+        illustrative: false,
+      }),
+    );
+    expect(html).toMatch(/<div role="img"[^>]*class="[^"]*\bisolate\b/);
   });
 });

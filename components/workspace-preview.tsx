@@ -24,9 +24,11 @@ interface WorkspacePreviewProps {
 // Desktop and tablet show the whole 3:2 artboard. Below md the frame is
 // min(236px, 30svh) tall and the full layer stack is scaled by frame height /
 // 610 and centred on the furniture zone (scene x 680, y 170–780), so phones
-// crop the scene instead of shrinking it (DESIGN.md §6–7).
+// crop the scene instead of shrinking it (DESIGN.md §6–7). `isolate` keeps
+// the layers' z-index inside the frame, so UI overlays (indicator, Undo
+// banner, Confirmed tag) always paint above the artwork.
 const FRAME =
-  "relative w-full overflow-hidden bg-scene-wall [--pv-h:min(236px,30svh)] h-(--pv-h) md:h-auto md:aspect-[3/2] md:rounded-preview md:shadow-preview";
+  "relative isolate w-full overflow-hidden bg-scene-wall [--pv-h:min(236px,30svh)] h-(--pv-h) md:h-auto md:aspect-[3/2] md:rounded-preview md:shadow-preview";
 const STACK =
   "absolute top-[calc(var(--pv-h)*-170/610)] left-[calc(50%_-_var(--pv-h)*680/610)] h-[calc(var(--pv-h)*800/610)] w-[calc(var(--pv-h)*1200/610)] md:inset-0 md:h-full md:w-full";
 const SIZES = "(min-width: 768px) 100vw, 250vw";
