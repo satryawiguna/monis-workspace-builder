@@ -2,7 +2,7 @@
 
 import { useMemo, useReducer, useState } from "react";
 import { createInitialState, createReducer, type Tab } from "@/lib/configurator";
-import { previewAltText, selectLayers, selectSummary } from "@/lib/selectors";
+import { includesIllustrative, previewAltText, selectLayers, selectSummary } from "@/lib/selectors";
 import type { Configuration, Product, ProductId } from "@/lib/types";
 import { AppHeader } from "./app-header";
 import { BuildPanel } from "./build-panel";
@@ -54,6 +54,7 @@ export function Configurator({ catalog, initialConfiguration, backdropSrc }: Con
               layers={selectLayers(configuration, catalog)}
               backdropSrc={backdropSrc}
               label={previewAltText(configuration, catalog)}
+              illustrative={includesIllustrative(configuration, catalog)}
             />
           </div>
         </div>

@@ -89,6 +89,13 @@ export function previewAltText(configuration: Configuration, catalog: readonly P
   return `Workspace with ${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}.`;
 }
 
+// True when any selected product is illustrative, so the preview can show the
+// Illustrative indicator (04 - UI UX §9).
+export function includesIllustrative(configuration: Configuration, catalog: readonly Product[]): boolean {
+  const { desk, chair, accessories } = resolve(configuration, catalog);
+  return [desk, chair, ...accessories].some((product) => product.status === "illustrative");
+}
+
 // DL-003: Start over shows when the configuration differs from the initial
 // one, or on the Confirmed stage.
 export function isStartOverVisible(
